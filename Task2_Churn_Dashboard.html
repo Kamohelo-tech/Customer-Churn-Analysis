@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Churn Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Arial,sans-serif; background:#f0f2f5; }
+  .topbar { background:#1a1a2e; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; }
+  .topbar h1 { color:#fff; font-size:17px; font-weight:600; }
+  .topbar p { color:rgba(255,255,255,0.45); font-size:11px; margin-top:2px; }
+  .filters { display:flex; gap:10px; }
+  .filters select { background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:5px 10px; border-radius:6px; font-size:12px; cursor:pointer; }
+  .filters select option { background:#1a1a2e; }
+  .body { padding:16px 22px; }
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+  .kpi { background:#fff; border-radius:10px; padding:14px 16px; border:1px solid #e5e7eb; }
+  .kpi-lbl { font-size:10px; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px; }
+  .kpi-val { font-size:24px; font-weight:700; }
+  .kpi-sub { font-size:10px; color:#aaa; margin-top:3px; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+  .row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .card { background:#fff; border-radius:10px; padding:14px 16px; border:1px solid #e5e7eb; }
+  .ctitle { font-size:11px; font-weight:600; color:#444; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:12px; }
+  .alert-red { background:#fef2f2; border-left:3px solid #ef4444; padding:7px 10px; border-radius:0 6px 6px 0; font-size:10px; color:#991b1b; margin-top:10px; }
+  .alert-yellow { background:#fffbeb; border-left:3px solid #f59e0b; padding:7px 10px; border-radius:0 6px 6px 0; font-size:10px; color:#92400e; margin-top:10px; }
+  .driver-list { display:flex; flex-direction:column; gap:8px; }
+  .driver-row { display:flex; align-items:center; gap:8px; font-size:11px; }
+  .driver-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .driver-label { color:#444; flex:1; }
+  .driver-val { font-weight:600; color:#1D9E75; }
+  footer { text-align:center; padding:14px; font-size:10px; color:#bbb; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>Customer Retention & Churn Dashboard</h1>
+    <p>Telco Customer Churn Dataset &nbsp;|&nbsp; 7,043 Customers &nbsp;|&nbsp; Future Interns Task 2 (2026) &nbsp;|&nbsp; Prepared by: Kamohelo Mabena</p>
+  </div>
+  <div class="filters">
+    <select id="contractFilter" onchange="applyFilters()">
+      <option value="All">Contract: All</option>
+      <option value="Month-to-Month">Month-to-Month</option>
+      <option value="One Year">One Year</option>
+      <option value="Two Year">Two Year</option>
+    </select>
+    <select id="internetFilter" onchange="applyFilters()">
+      <option value="All">Internet: All</option>
+      <option value="Fibre">Fibre Optic</option>
+      <option value="DSL">DSL</option>
+      <option value="None">No Internet</option>
+    </select>
+    <select id="genderFilter" onchange="applyFilters()">
+      <option value="All">Gender: All</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+  </div>
+</div>
+
+<div class="body">
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-lbl">Total Customers</div>
+      <div class="kpi-val" style="color:#1a1a2e;" id="kpi-total">7,043</div>
+      <div class="kpi-sub">Analysed in this dataset</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Churned Customers</div>
+      <div class="kpi-val" style="color:#E24B4A;" id="kpi-churned">1,869</div>
+      <div class="kpi-sub">Left during the period</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Churn Rate</div>
+      <div class="kpi-val" style="color:#E24B4A;" id="kpi-rate">26.5%</div>
+      <div class="kpi-sub" style="color:#E24B4A;">⚠ Above 20% benchmark</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Avg Customer Tenure</div>
+      <div class="kpi-val" style="color:#1D9E75;" id="kpi-tenure">32 mo</div>
+      <div class="kpi-sub">Retained customers avg 38mo</div>
+    </div>
+  </div>
+
+  <div class="row2">
+    <div class="card">
+      <div class="ctitle">Churn rate by contract type</div>
+      <div style="position:relative;height:200px;">
+        <canvas id="contractChart" role="img" aria-label="Bar chart: Month-to-month 42.7%, One Year 11.3%, Two Year 2.8%"></canvas>
+      </div>
+      <div class="alert-red">Month-to-month churn (42.7%) is 15x higher than two-year contracts (2.8%)</div>
+    </div>
+    <div class="card">
+      <div class="ctitle">Churn rate by customer tenure</div>
+      <div style="position:relative;height:200px;">
+        <canvas id="tenureChart" role="img" aria-label="Line chart showing churn rate decreasing as tenure increases"></canvas>
+      </div>
+      <div class="alert-yellow">47.4% of customers churn within first 12 months — onboarding is critical</div>
+    </div>
+  </div>
+
+  <div class="row3">
+    <div class="card">
+      <div class="ctitle">Churn by internet service</div>
+      <div style="position:relative;height:170px;">
+        <canvas id="internetChart" role="img" aria-label="Donut chart: Fibre Optic 44%, DSL 34%, No Internet 22%"></canvas>
+      </div>
+      <div style="margin-top:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;"><span style="color:#E24B4A;">● Fibre Optic</span><span style="font-weight:600;color:#E24B4A;">41.9% churn</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px;"><span style="color:#EF9F27;">● DSL</span><span style="font-weight:600;color:#EF9F27;">18.9% churn</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px;"><span style="color:#1D9E75;">● No Internet</span><span style="font-weight:600;color:#1D9E75;">7.4% churn</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">Churn by payment method</div>
+      <div style="position:relative;height:170px;">
+        <canvas id="paymentChart" role="img" aria-label="Bar chart showing electronic check has highest churn at 45.3%"></canvas>
+      </div>
+      <div class="alert-red">Electronic check customers churn at 45.3% — push auto-pay adoption</div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">Top retention drivers</div>
+      <div class="driver-list" style="margin-top:6px;">
+        <div class="driver-row"><div class="driver-dot" style="background:#1D9E75;"></div><span class="driver-label">Two-year contract</span><span class="driver-val">2.8% churn</span></div>
+        <div class="driver-row"><div class="driver-dot" style="background:#1D9E75;"></div><span class="driver-label">Tenure 49+ months</span><span class="driver-val">6.1% churn</span></div>
+        <div class="driver-row"><div class="driver-dot" style="background:#378ADD;"></div><span class="driver-label">Auto-pay enabled</span><span class="driver-val">~16% churn</span></div>
+        <div class="driver-row"><div class="driver-dot" style="background:#378ADD;"></div><span class="driver-label">3+ services bundled</span><span class="driver-val">~18% churn</span></div>
+        <div class="driver-row"><div class="driver-dot" style="background:#EF9F27;"></div><span class="driver-label">Tech support add-on</span><span class="driver-val">~20% churn</span></div>
+        <div class="driver-row"><div class="driver-dot" style="background:#EF9F27;"></div><span class="driver-label">One-year contract</span><span class="driver-val">11.3% churn</span></div>
+        <div class="driver-row"><div class="driver-dot" style="background:#E24B4A;"></div><span class="driver-label">Month-to-month</span><span class="driver-val" style="color:#E24B4A;">42.7% churn</span></div>
+        <div class="driver-row"><div class="driver-dot" style="background:#E24B4A;"></div><span class="driver-label">0–12 months tenure</span><span class="driver-val" style="color:#E24B4A;">47.4% churn</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Customer Retention & Churn Dashboard &nbsp;|&nbsp; Future Interns Task 2 (2026) &nbsp;|&nbsp; Kamohelo Mabena &nbsp;|&nbsp; Built with HTML & Chart.js</footer>
+
+<script>
+let contractChart, tenureChart, internetChart, paymentChart;
+
+function initCharts() {
+  contractChart = new Chart(document.getElementById('contractChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Month-to-Month','One Year','Two Year'],
+      datasets: [{
+        label: 'Churn Rate %',
+        data: [42.7, 11.3, 2.8],
+        backgroundColor: ['#E24B4A','#EF9F27','#1D9E75'],
+        borderWidth: 0, borderRadius: 5
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false} },
+      scales:{
+        x:{ticks:{font:{size:10},color:'#666'},grid:{display:false}},
+        y:{ticks:{font:{size:10},color:'#999',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.05)'},max:55}
+      }
+    }
+  });
+
+  tenureChart = new Chart(document.getElementById('tenureChart'), {
+    type: 'line',
+    data: {
+      labels: ['0-6mo','7-12mo','13-18mo','19-24mo','25-36mo','37-48mo','49-60mo','61+mo'],
+      datasets: [{
+        label: 'Churn Rate %',
+        data: [55.2, 39.6, 34.1, 28.3, 18.6, 12.4, 7.8, 4.3],
+        borderColor: '#E24B4A',
+        backgroundColor: 'rgba(226,75,74,0.08)',
+        borderWidth: 2.5, pointRadius: 4,
+        pointBackgroundColor: '#E24B4A',
+        fill: true, tension: 0.4
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false} },
+      scales:{
+        x:{ticks:{font:{size:9},color:'#888'},grid:{display:false}},
+        y:{ticks:{font:{size:9},color:'#999',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.05)'}}
+      }
+    }
+  });
+
+  internetChart = new Chart(document.getElementById('internetChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Fibre Optic','DSL','No Internet'],
+      datasets: [{
+        data: [3096, 2421, 1526],
+        backgroundColor: ['#E24B4A','#EF9F27','#1D9E75'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>' '+ctx.label+': '+ctx.raw.toLocaleString()+' customers'}}
+      },
+      cutout:'65%'
+    }
+  });
+
+  paymentChart = new Chart(document.getElementById('paymentChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Electronic\nCheck','Mailed\nCheck','Bank\nTransfer','Credit\nCard'],
+      datasets: [{
+        label: 'Churn Rate %',
+        data: [45.3, 19.1, 16.7, 15.2],
+        backgroundColor: ['#E24B4A','#EF9F27','#1D9E75','#1D9E75'],
+        borderWidth: 0, borderRadius: 5
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false} },
+      scales:{
+        x:{ticks:{font:{size:9},color:'#666'},grid:{display:false}},
+        y:{ticks:{font:{size:9},color:'#999',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.05)'},max:55}
+      }
+    }
+  });
+}
+
+function applyFilters() {
+  const contract = document.getElementById('contractFilter').value;
+  const internet = document.getElementById('internetFilter').value;
+
+  const contractRates = {
+    'All': [42.7,11.3,2.8],
+    'Month-to-Month': [42.7,0,0],
+    'One Year': [0,11.3,0],
+    'Two Year': [0,0,2.8]
+  };
+  contractChart.data.datasets[0].data = contractRates[contract] || contractRates['All'];
+  contractChart.update();
+
+  const internetData = {
+    'All': [3096,2421,1526],
+    'Fibre': [3096,0,0],
+    'DSL': [0,2421,0],
+    'None': [0,0,1526]
+  };
+  internetChart.data.datasets[0].data = internetData[internet] || internetData['All'];
+  internetChart.update();
+
+  const churnRates = {'All':26.5,'Month-to-Month':42.7,'One Year':11.3,'Two Year':2.8};
+  const totalMap = {'All':7043,'Month-to-Month':3875,'One Year':1473,'Two Year':1695};
+  const rate = churnRates[contract] || 26.5;
+  const total = totalMap[contract] || 7043;
+  const churned = Math.round(total * rate/100);
+
+  document.getElementById('kpi-total').textContent = total.toLocaleString();
+  document.getElementById('kpi-churned').textContent = churned.toLocaleString();
+  document.getElementById('kpi-rate').textContent = rate.toFixed(1)+'%';
+  document.getElementById('kpi-rate').style.color = rate > 20 ? '#E24B4A' : '#1D9E75';
+}
+
+initCharts();
+</script>
+</body>
+</html>
