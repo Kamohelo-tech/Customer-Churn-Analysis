@@ -118,15 +118,4 @@ Retention Rate = 1 - [Churn Rate]
 ```
 
 ---
-
-## 👤 About
-
-**Kamohelo Mabena**
-Future Interns Data Science & Analytics Internship Programme (2026)
-
-📎 LinkedIn: *[Add your LinkedIn URL here]*
-📁 Task 1 Project: *[Add Task 1 GitHub link here]*
-
----
-
-*Built with Microsoft Excel and Power BI Desktop.*
+BI Desktop.*
