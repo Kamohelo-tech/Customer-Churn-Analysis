@@ -96,7 +96,7 @@ Payment method analysis reveals that customers paying by **electronic check** ch
 
 ---
 
-## 8. Retention Drivers — What Keeps Customers?
+## 8. Retention Drivers - What Keeps Customers?
 
 The analysis identified the following factors that are strongly associated with customer retention:
 
@@ -116,7 +116,7 @@ The analysis identified the following factors that are strongly associated with 
 
 3. **Investigate Fibre Optic satisfaction:** Urgently survey Fibre Optic customers. At 41.9% churn, this segment is haemorrhaging revenue. Identify whether the issue is price, quality, or competition.
 
-4. **Push auto-pay adoption:** Offer a 5% monthly discount for auto-pay. Electronic check customers churn at 45% — switching them to auto-pay could halve their churn risk.
+4. **Push auto-pay adoption:** Offer a 5% monthly discount for auto-pay. Electronic check customers churn at 45% switching them to auto-pay could halve their churn risk.
 
 5. **Bundle services strategically:** Promote multi-service bundles. Customers with more services have higher switching costs and lower churn rates. Create attractive phone + internet + streaming packages.
 
