@@ -15,7 +15,7 @@
 
 This report presents a comprehensive customer retention and churn analysis for a telecommunications company. The analysis is based on 7,043 customer records, examining demographics, service subscriptions, contract types, and churn behaviour.
 
-The overall churn rate stands at **26.5%** — meaning more than 1 in 4 customers left the business during the analysis period. This represents a significant revenue risk. The analysis identifies **contract type, tenure, and internet service type** as the three most powerful predictors of churn.
+The overall churn rate stands at **26.5%** meaning more than 1 in 4 customers left the business during the analysis period. This represents a significant revenue risk. The analysis identifies **contract type, tenure, and internet service type** as the three most powerful predictors of churn.
 
 Clear, actionable recommendations are provided to help the business reduce churn, improve retention, and protect long-term revenue.
 
