@@ -7,7 +7,7 @@
 - **Tools Used:** Microsoft Excel | Power BI Desktop
 - **Total Customers Analysed:** 7,043
 - **Prepared by:** Kamohelo Mabena
-- **Programme:** Future Interns — Data Science & Analytics Task 2 (2026)
+- **Programme:** Future Interns - Data Science & Analytics Task 2 (2026)
 
 ---
 
