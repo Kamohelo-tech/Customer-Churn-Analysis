@@ -1,17 +1,17 @@
-# 📉 Customer Retention & Churn Analysis
+# Customer Retention & Churn Analysis
 
-**Future Interns — Data Science & Analytics Task 2 (2026)**
+**Future Interns - Data Science & Analytics Task 2 (2026)**
 **Prepared by: Kamohelo Mabena**
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 
 This project presents a customer retention and churn analysis for a telecommunications company. Using 7,043 customer records, the analysis identifies why customers leave, which segments are most at risk, and what actions the business can take to improve retention and protect revenue.
 
 ---
 
-## 🎯 Business Questions Answered
+##  Business Questions Answered
 
 - What is the overall churn rate and how does it compare to industry benchmarks?
 - Which contract types have the highest churn risk?
@@ -28,7 +28,7 @@ This project presents a customer retention and churn analysis for a telecommunic
 
 ---
 
-## 📁 Files in This Repository
+##  Files in This Repository
 
 | File | Description |
 |------|-------------|
@@ -40,52 +40,52 @@ This project presents a customer retention and churn analysis for a telecommunic
 
 ---
 
-## 🛠️ Tools Used
+##  Tools Used
 
-- **Microsoft Excel** — Data cleaning and preparation
-- **Power BI Desktop** — Dashboard and visualisation
-- **DAX** — Calculated columns and measures
-- **Power Query** — Data transformation
-
----
-
-## 📊 Dashboard Visuals
-
-1. **4 KPI Cards** — Total Customers (7,043), Churned (1,869), Churn Rate (26.5%), Avg Tenure (32 months)
-2. **Churn by Contract Type (Bar Chart)** — Month-to-month vs One Year vs Two Year
-3. **Churn by Tenure (Line Chart)** — How churn risk changes over customer lifetime
-4. **Churn by Internet Service (Donut Chart)** — Fibre Optic vs DSL vs No Internet
-5. **Churn by Payment Method (Bar Chart)** — Electronic check vs Auto-pay methods
-6. **Retention Drivers Summary** — Key factors that keep customers loyal
-7. **Interactive Slicers** — Filter by Contract Type, Internet Service, Gender
+- **Microsoft Excel** - Data cleaning and preparation
+- **Power BI Desktop** - Dashboard and visualisation
+- **DAX** - Calculated columns and measures
+- **Power Query** - Data transformation
 
 ---
 
-## 🔍 Key Insights
+##  Dashboard Visuals
 
-1. **Overall churn rate is 26.5%** — significantly above the 15–20% industry benchmark
-2. **Month-to-month customers churn at 42.7%** — 15x higher than two-year contract customers (2.8%)
-3. **47.4% of customers churn within their first 12 months** — the first year is the highest-risk period
-4. **Fibre Optic customers churn at 41.9%** — double the DSL rate despite being the premium service
-5. **Electronic check payment customers churn at 45.3%** — vs 15–18% for auto-pay customers
-6. **Customers with 3+ services churn significantly less** — bundling creates switching costs
+1. **4 KPI Cards** - Total Customers (7,043), Churned (1,869), Churn Rate (26.5%), Avg Tenure (32 months)
+2. **Churn by Contract Type (Bar Chart)** - Month-to-month vs One Year vs Two Year
+3. **Churn by Tenure (Line Chart)** - How churn risk changes over customer lifetime
+4. **Churn by Internet Service (Donut Chart)** - Fibre Optic vs DSL vs No Internet
+5. **Churn by Payment Method (Bar Chart)** - Electronic check vs Auto-pay methods
+6. **Retention Drivers Summary** - Key factors that keep customers loyal
+7. **Interactive Slicers** - Filter by Contract Type, Internet Service, Gender
 
 ---
 
-## ✅ Recommendations
+##  Key Insights
+
+1. **Overall churn rate is 26.5%** - significantly above the 15–20% industry benchmark
+2. **Month-to-month customers churn at 42.7%** - 15x higher than two-year contract customers (2.8%)
+3. **47.4% of customers churn within their first 12 months** - the first year is the highest-risk period
+4. **Fibre Optic customers churn at 41.9%** - double the DSL rate despite being the premium service
+5. **Electronic check payment customers churn at 45.3%** - vs 15-18% for auto-pay customers
+6. **Customers with 3+ services churn significantly less** - bundling creates switching costs
+
+---
+
+##  Recommendations
 
 | Priority | Recommendation | Expected Impact |
 |----------|----------------|-----------------|
-| 🔴 High | Convert month-to-month customers to annual contracts with incentives | Reduce churn by up to 30% |
-| 🔴 High | Implement 90-day onboarding programme for new customers | Reduce first-year churn |
-| 🔴 High | Investigate Fibre Optic customer satisfaction urgently | Recover high-value segment |
-| 🟡 Medium | Offer 5% discount for auto-pay adoption | Reduce payment-related churn |
-| 🟡 Medium | Promote multi-service bundles | Increase switching costs |
-| 🟢 Low | Improve tech support quality and response times | Improve loyalty scores |
+|  High | Convert month-to-month customers to annual contracts with incentives | Reduce churn by up to 30% |
+|  High | Implement 90-day onboarding programme for new customers | Reduce first-year churn |
+|  High | Investigate Fibre Optic customer satisfaction urgently | Recover high-value segment |
+|  Medium | Offer 5% discount for auto-pay adoption | Reduce payment-related churn |
+|  Medium | Promote multi-service bundles | Increase switching costs |
+|  Low | Improve tech support quality and response times | Improve loyalty scores |
 
 ---
 
-## 📂 Dataset
+##  Dataset
 
 - **Source:** [Telco Customer Churn — Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
 - **Size:** 7,043 rows × 21 columns
@@ -93,7 +93,7 @@ This project presents a customer retention and churn analysis for a telecommunic
 
 ---
 
-## 🧹 Data Cleaning Steps
+##  Data Cleaning Steps
 
 1. Removed 11 blank rows in TotalCharges column
 2. Converted TotalCharges from text to decimal number
@@ -105,7 +105,7 @@ This project presents a customer retention and churn analysis for a telecommunic
 
 ---
 
-## 📐 DAX Measures Created
+##  DAX Measures Created
 
 ```
 Churn Rate = DIVIDE(COUNTROWS(FILTER('Telco','Telco'[Churn]="Yes")), COUNTROWS('Telco'))
