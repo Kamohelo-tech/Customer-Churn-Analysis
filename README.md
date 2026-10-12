@@ -24,7 +24,7 @@ This project presents a customer retention and churn analysis for a telecommunic
 
 ##  Dashboard Preview
 
-![Dashboard Screenshot](Screenshot 2026-05-29 095603.png)
+![Dashboard Screenshot](./Screenshot 2026-05-29 095603.png)
 
 ---
 
