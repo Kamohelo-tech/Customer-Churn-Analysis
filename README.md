@@ -86,7 +86,7 @@ This project presents a customer retention and churn analysis for a telecommunic
 
 ##  Dataset
 
-- **Source:** [Telco Customer Churn — Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
+- **Source:** [Telco Customer Churn - Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
 - **Size:** 7,043 rows × 21 columns
 - **Features:** Demographics, services, contract type, payment method, tenure, monthly charges, churn status
 
