@@ -49,7 +49,7 @@ Contract type is the single strongest predictor of churn in this dataset. The an
 | One Year | 1,473 | 166 | 11.3% |
 | Two Year | 1,695 | 48 | 2.8% |
 
-Month-to-month customers churn at an alarming rate of **42.7%** — over **15 times higher** than two-year contract customers. This is the most critical finding in the analysis. Customers on long-term contracts are far more committed and significantly less likely to leave.
+Month-to-month customers churn at an alarming rate of **42.7%** over **15 times higher** than two-year contract customers. This is the most critical finding in the analysis. Customers on long-term contracts are far more committed and significantly less likely to leave.
 
 **Recommendation:** Aggressively incentivise customers to upgrade from month-to-month to annual or two-year contracts. Offer 1–2 months free, discounted rates, or premium features as switching incentives.
 
